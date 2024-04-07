@@ -1,6 +1,8 @@
+import 'package:babalomoda/core/network/WebBrowser.dart';
 import 'package:babalomoda/feature/home/data/model/top_story_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleDetailsScreen extends StatelessWidget {
   const ArticleDetailsScreen({super.key, required this.story});
@@ -31,8 +33,8 @@ class ArticleDetailsScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
           children: [
-            Stack(
-              children:[ ClipRRect(
+            Stack(children: [
+              ClipRRect(
                 borderRadius: BorderRadius.circular(5.r),
                 child: Image.network(
                   story.multimedia.first.url,
@@ -43,19 +45,20 @@ class ArticleDetailsScreen extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.amber, width: .3),
-                  borderRadius: BorderRadius.only(bottomRight:Radius.circular(8.r))
-                ),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.amber, width: .3),
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(8.r))),
                 padding: EdgeInsets.all(5.h),
-                child: Text('${story.section} - ${story.subsection}'.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.bold, color: Colors.amber),
+                child: Text(
+                  '${story.section} - ${story.subsection}'.toUpperCase(),
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber),
                 ),
               )
-              ]
-            ),
+            ]),
             Container(
               height: ScreenUtil().screenHeight * .5,
               margin: EdgeInsets.symmetric(
@@ -73,33 +76,64 @@ class ArticleDetailsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      story.title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
+              child: Column(
+                children: [
+                  Text(
+                    story.title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Divider(
+                    height: 50.h,
+                    indent: ScreenUtil().screenWidth * .1,
+                    endIndent: ScreenUtil().screenWidth * .1,
+                    color: Colors.black.withOpacity(.5),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                WebBrowser(story.url, story.title)),
+                      );
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${story.desFacet.first} ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp,
+                                color: Colors.black),
+                            
+                          ),
+                          TextSpan(
+                            text: 'see more',
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14.sp,
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(
-                      height: 8.h,
+                  ),
+                 Expanded(child: Container()),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      story.byline,
+                      style: TextStyle(fontSize: 10.sp),
                     ),
-                    Text(story.desFacet.first),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        story.byline,
-                        style: TextStyle(fontSize: 10.sp),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
             Align(
