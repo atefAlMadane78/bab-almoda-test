@@ -11,6 +11,7 @@ class HomeRemoteDataSource {
 
     if (result.containsKey('status')&& result['status']== 'OK') {
       final List data = result['results'];
+      print(result);
       if (data.isEmpty) {
         throw EmptyServerListException();
       }

@@ -5,4 +5,4 @@ enum DataState {
   faild,
 }
 
-
+enum MessageState { success, error, info }

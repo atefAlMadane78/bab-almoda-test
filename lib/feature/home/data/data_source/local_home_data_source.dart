@@ -46,7 +46,7 @@ class HomeLocalDataSource {
     }
   }
 
-  Future<TopStoryModel> getCachedPlanDetails({
+  Future<TopStoryModel> getCachedStoryDetails({
     required int index,
   }) async {
     TopStoryModel details;

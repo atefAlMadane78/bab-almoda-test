@@ -14,15 +14,24 @@ class TopStoryModel extends Equatable {
   final String abstract;
   final String url;
   final String byline;
+  @JsonKey(name: 'item_type')
   final String itemType;
+  @JsonKey(name: 'updated_date')
   final String updatedDate;
+  @JsonKey(name: 'created_date')
   final String createdDate;
+  @JsonKey(name: 'published_date')
   final String publishedDate;
+  @JsonKey(name: 'material_type_facet')
   final String materialTypeFacet;
   final String kicker;
+  @JsonKey(name: 'des_facet')
   final List<String> desFacet;
+  @JsonKey(name: 'org_facet')
   final List<String> orgFacet;
+  @JsonKey(name: 'per_facet')
   final List<String> perFacet;
+  @JsonKey(name: 'geo_facet')
   final List<String> geoFacet;
   final List<MultiMediaModel> multimedia;
 
@@ -46,7 +55,8 @@ class TopStoryModel extends Equatable {
     required this.multimedia,
   });
 
-  factory TopStoryModel.fromJson(Map<String, dynamic> json) => _$TopStoryModelFromJson(json);
+  factory TopStoryModel.fromJson(Map<String, dynamic> json) =>
+      _$TopStoryModelFromJson(json);
   Map<String, dynamic> toJson() => _$TopStoryModelToJson(this);
 
   @override
@@ -70,4 +80,3 @@ class TopStoryModel extends Equatable {
         multimedia,
       ];
 }
-

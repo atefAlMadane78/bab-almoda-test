@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Group_142" data-name="Group 142" transform="translate(-28 -763)">
+    <g id="vuesax_linear_shield-tick" data-name="vuesax/linear/shield-tick" transform="translate(-272 575)">
+      <g id="shield-tick">
+        <path id="Vector" d="M0,0H24V24H0Z" transform="translate(324 212) rotate(180)" fill="none" opacity="0"/>
+        <g id="Ellipse_34" data-name="Ellipse 34" transform="translate(300 188)" fill="none" stroke="#0c70bd" stroke-width="2">
+          <circle cx="12" cy="12" r="12" stroke="none"/>
+          <circle cx="12" cy="12" r="11" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <path id="Vector-2" data-name="Vector" d="M3.728,0,0,3.728" transform="translate(42.611 777.369) rotate(135)" fill="none" stroke="#0c70bd" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <circle id="Ellipse_35" data-name="Ellipse 35" cx="1" cy="1" r="1" transform="translate(39 770)" fill="#0c70bd"/>
+  </g>
+</svg>
