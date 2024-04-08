@@ -44,7 +44,8 @@ class HeaderWidget extends StatelessWidget {
                 label: Text(
                   'Search',
                   style: TextStyle(
-                    fontSize: OrientationHelper.isPortrait(context) ?  14.sp: 10.sp,
+                    fontSize:
+                        OrientationHelper.isPortrait(context) ? 14.sp : 10.sp,
                     color: const Color(0xffC5C5C5),
                   ),
                 )),
@@ -55,7 +56,7 @@ class HeaderWidget extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               InstanceAlert(context).showbottomSheetDialog(
-                  widget: FilterWidget(), animation: animation);
+                  widget: const FilterWidget(), animation: animation);
             },
             child: Row(
               children: [
@@ -75,7 +76,9 @@ class HeaderWidget extends StatelessWidget {
                 ),
                 Text(
                   'Filter',
-                  style: TextStyle(fontSize: OrientationHelper.isPortrait(context) ?  12.sp: 8.sp),
+                  style: TextStyle(
+                      fontSize:
+                          OrientationHelper.isPortrait(context) ? 12.sp : 8.sp),
                 ),
               ],
             ),

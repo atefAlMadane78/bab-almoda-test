@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MultiProvider(
         providers: Providers.init(),
         child: ScreenUtilInit(builder: (BuildContext context, Widget? child) {
-          return MaterialApp(
+          return const MaterialApp(
               debugShowCheckedModeBanner: false, home: HomeScrenn());
         }));
   }

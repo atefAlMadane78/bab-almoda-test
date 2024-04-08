@@ -11,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomeScrenn extends StatefulWidget {
-  HomeScrenn({super.key});
+  const HomeScrenn({super.key});
 
   @override
   State<HomeScrenn> createState() => _HomeScrennState();

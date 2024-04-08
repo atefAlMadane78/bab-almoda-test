@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:babalomoda/core/config/orientation_helper.dart';
 import 'package:babalomoda/feature/home/presentation/provider/home_provider.dart';
@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class FilterWidget extends StatefulWidget {
+  const FilterWidget({super.key});
+
   @override
   _FilterWidgetState createState() => _FilterWidgetState();
 }

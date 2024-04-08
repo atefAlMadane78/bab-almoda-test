@@ -1,10 +1,9 @@
 import 'package:babalomoda/core/config/orientation_helper.dart';
-import 'package:babalomoda/core/network/WebBrowser.dart';
+import 'package:babalomoda/core/network/web_browser.dart';
 import 'package:babalomoda/feature/home/data/model/top_story_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleDetailsScreen extends StatelessWidget {
   const ArticleDetailsScreen({super.key, required this.story});

@@ -1,7 +1,9 @@
+// ignore_for_file: empty_catches, prefer_collection_literals
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'WebBrowser.dart';
+import 'web_browser.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class BaseWebview extends State<WebBrowser> {
@@ -13,7 +15,6 @@ class BaseWebview extends State<WebBrowser> {
 
   @override
   void initState() {
-    print(widget.url);
     super.initState();
   }
 
@@ -32,9 +33,9 @@ class BaseWebview extends State<WebBrowser> {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-            
               Expanded(
                   child: Container(
+                padding: const EdgeInsets.only(left: 7, right: 7),
                 child: Stack(
                   children: <Widget>[
                     WebView(
@@ -46,9 +47,7 @@ class BaseWebview extends State<WebBrowser> {
                         setState(() {
                           _canGoBack = canGoBack;
                         });
-                        print('here_WebView_onPageFinished: $a');
                         setState(() {
-                          print('here_WebView_onPageFinished #1');
                           loading = false;
                         });
                       },
@@ -58,36 +57,9 @@ class BaseWebview extends State<WebBrowser> {
                             onMessageReceived: (JavascriptMessage e) {
                               try {
                                 var reponce = json.decode(e.message);
-                                print(
-                                    'here_WebView_onMessageReceived: $reponce');
+
                                 Navigator.of(context).pop(reponce);
-                              } catch (er) {
-                                print("errrrrrrrorrrrrrrrrrrrrrrrr$er");
-                                Widget okButton = TextButton(
-                                  child: Text("حسناً"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                );
-
-                                // set up the AlertDialog
-                                AlertDialog alert = AlertDialog(
-                                  title: Text("لزوم كار"),
-                                  content: Text(er.toString()),
-                                  actions: [
-                                    okButton,
-                                  ],
-                                );
-
-                                // show the dialog
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return alert;
-                                  },
-                                );
-                                // Alert.show(context, er.toString());
-                              }
+                              } catch (er) {}
                             })
                       ].toSet(),
                       navigationDelegate: (n) {
@@ -105,14 +77,14 @@ class BaseWebview extends State<WebBrowser> {
                     loading
                         ? Center(
                             child: Container(
-                              padding: EdgeInsets.all(10),
+                              padding:const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(25),
                               ),
                               width: 50,
                               height: 50,
-                              child: CircularProgressIndicator(
+                              child: const CircularProgressIndicator(
                                 color: Colors.amber,
                               ),
                             ),
@@ -120,7 +92,6 @@ class BaseWebview extends State<WebBrowser> {
                         : Container(),
                   ],
                 ),
-                padding:const  EdgeInsets.only(left: 7, right: 7),
               ))
             ],
           ),

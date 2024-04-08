@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'BaseWebview.dart';
+import 'base_web_view.dart';
 
 class WebBrowser extends StatefulWidget {
   final String? url, title;
-  WebBrowser(this.url, this.title);
+  const WebBrowser(this.url, this.title, {super.key});
   @override
   State<WebBrowser> createState() {
     return BaseWebview();

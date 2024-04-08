@@ -45,8 +45,6 @@ class InstanceAlert {
         context: context,
         isDismissible: isDismissable,
         builder: (context) {
-          print(
-              "dddddddddddddddddddddddddddd ${MediaQuery.of(context).viewInsets.bottom}");
           return SingleChildScrollView(
               child: Padding(
             padding: EdgeInsets.only(
