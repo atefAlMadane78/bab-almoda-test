@@ -19,20 +19,22 @@ class HomeRepositories {
             await _remoteDataSource.getAllStore(section: section);
         try {
           _localDataSource.cacheStories(remoteStories, section);
-        } on EmptyCacheException {}
+        } on EmptyCacheException catch (e) {
+          return Left(EmptyCacheFailure(message: e.message));
+        }
         return Right(remoteStories);
-      } on ServerException {
-        return Left(ServerFailure());
-      } on EmptyServerListException {
-        return Left(EmptyServerListFailure());
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      } on EmptyServerListException catch (e) {
+        return Left(EmptyServerListFailure(message: e.message));
       }
     } else {
       try {
         final localStories =
             await _localDataSource.getCachedStories(section: section);
         return Right(localStories);
-      } on EmptyCacheException {
-        return Left(EmptyCacheFailure());
+      } on EmptyCacheException catch (e) {
+        return Left(EmptyCacheFailure(message: e.message));
       }
     }
   }

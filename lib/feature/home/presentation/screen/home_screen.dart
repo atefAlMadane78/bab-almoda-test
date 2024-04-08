@@ -1,4 +1,5 @@
 import 'package:babalomoda/core/config/enum.dart';
+import 'package:babalomoda/core/widgets/loading_widget.dart';
 import 'package:babalomoda/feature/home/data/model/top_story_model.dart';
 import 'package:babalomoda/feature/home/presentation/provider/home_provider.dart';
 import 'package:babalomoda/feature/home/presentation/widget/grid_item_widget.dart';
@@ -64,32 +65,62 @@ class _HomeScrennState extends State<HomeScrenn> with TickerProviderStateMixin {
                 }
               }
 
-              return provider.dataState == DataState.loading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.amber,
+              return provider.dataState == DataState.faild
+                  ? Center(
+                      child: Text(
+                      provider.message,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
-                  : provider.isGrid
-                      ? GridView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, childAspectRatio: .5.sp),
-                          itemCount: filterStories.length,
-                          itemBuilder: (context, index) {
-                            return GridItemWidget(story: filterStories[index]);
-                          },
-                        )
-                      : ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: filterStories.length,
-                          itemBuilder: (context, index) {
-                            return ListItemWidget(story: filterStories[index]);
-                          },
-                        );
+                    ))
+                  : filterStories.isEmpty
+                      ? const Center(
+                          child: Text(
+                          'There is no stories found',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ))
+                      : provider.isGrid
+                          ? Column(
+                              children: [
+                                if (provider.dataState == DataState.loading)
+                                  const LoadingWidget(),
+                                Expanded(
+                                  child: GridView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: .5.sp),
+                                    itemCount: filterStories.length,
+                                    itemBuilder: (context, index) {
+                                      return GridItemWidget(
+                                          story: filterStories[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                if (provider.dataState == DataState.loading)
+                                  const LoadingWidget(),
+                                Expanded(
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: filterStories.length,
+                                    itemBuilder: (context, index) {
+                                      return ListItemWidget(
+                                          story: filterStories[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            );
             }))
           ],
         ),

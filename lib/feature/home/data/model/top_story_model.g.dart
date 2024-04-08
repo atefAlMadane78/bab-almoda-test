@@ -28,7 +28,7 @@ TopStoryModel _$TopStoryModelFromJson(Map<String, dynamic> json) =>
           (json['per_facet'] as List<dynamic>).map((e) => e as String).toList(),
       geoFacet:
           (json['geo_facet'] as List<dynamic>).map((e) => e as String).toList(),
-      multimedia: (json['multimedia'] as List<dynamic>)
+      multimedia:json['multimedia']==null? null: (json['multimedia'] as List<dynamic>)
           .map((e) => MultiMediaModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

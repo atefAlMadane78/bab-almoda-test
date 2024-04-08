@@ -33,11 +33,11 @@ class ArticleDetailsScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
           children: [
-            Stack(children: [
+          if( story.multimedia?.isNotEmpty?? false)  Stack(children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(5.r),
                 child: Image.network(
-                  story.multimedia.first.url,
+                  story.multimedia!.first.url,
                   height: ScreenUtil().screenHeight * .3,
                   width: double.infinity,
                   fit: BoxFit.fill,
@@ -51,7 +51,7 @@ class ArticleDetailsScreen extends StatelessWidget {
                         BorderRadius.only(bottomRight: Radius.circular(8.r))),
                 padding: EdgeInsets.all(5.h),
                 child: Text(
-                  '${story.section} - ${story.subsection}'.toUpperCase(),
+                  '${story.section} ${story.section.isNotEmpty&& story.subsection.isNotEmpty? '-': ''} ${story.subsection}'.toUpperCase(),
                   style: TextStyle(
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,

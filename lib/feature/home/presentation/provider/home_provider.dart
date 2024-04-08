@@ -61,6 +61,7 @@ class HomeProvider extends ChangeNotifier {
       result.fold((failure) {
         dataState = DataState.faild;
         message = failure.message;
+        print(failure.message + '55555555555555');
         notifyListeners();
       }, (remoteData) async {
         dataState = DataState.done;

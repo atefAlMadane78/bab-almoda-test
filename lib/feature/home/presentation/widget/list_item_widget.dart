@@ -31,16 +31,17 @@ class ListItemWidget extends StatelessWidget {
             child: IntrinsicHeight(
               child: Row(
                 children: [
-                  Expanded(
-                      child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.r),
-                    child: Image.network(
-                      story.multimedia.first.url,
-                      height: 120.h,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    ),
-                  )),
+                  if (story.multimedia?.isNotEmpty ?? false)
+                    Expanded(
+                        child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5.r),
+                      child: Image.network(
+                        story.multimedia!.first.url,
+                        height: 120.h,
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                      ),
+                    )),
                   SizedBox(
                     width: 10.w,
                   ),

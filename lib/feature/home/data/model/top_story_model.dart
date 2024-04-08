@@ -33,7 +33,7 @@ class TopStoryModel extends Equatable {
   final List<String> perFacet;
   @JsonKey(name: 'geo_facet')
   final List<String> geoFacet;
-  final List<MultiMediaModel> multimedia;
+  final List<MultiMediaModel>? multimedia;
 
   const TopStoryModel({
     required this.section,

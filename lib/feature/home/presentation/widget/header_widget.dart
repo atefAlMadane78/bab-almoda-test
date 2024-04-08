@@ -7,9 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key, this.animation});
+  HeaderWidget({super.key, this.animation});
 
   final AnimationController? animation;
+  final FocusNode focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +19,26 @@ class HeaderWidget extends StatelessWidget {
         Expanded(
           flex: 7,
           child: TextFormField(
+            focusNode: focusNode,
             controller: context.read<HomeProvider>().searchController,
             onChanged: (value) {
-                context.read<HomeProvider>().changeSearch(value);
+              context.read<HomeProvider>().changeSearch(value);
             },
             decoration: InputDecoration(
                 border: InputBorder.none,
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Colors.amber,
+                ),
+                suffix: IconButton(
+                    onPressed: () {
+                      context.read<HomeProvider>().clearSearch();
+                      focusNode.unfocus();
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.amber,
+                    )),
                 label: Text(
                   'Search',
                   style: TextStyle(
@@ -43,9 +57,16 @@ class HeaderWidget extends StatelessWidget {
             },
             child: Row(
               children: [
-                SvgPicture.asset(
-                  'assets/icons/filter.svg',
-                  height: 15.h,
+                Consumer<HomeProvider>(
+                  builder: (context, provider, child) => SvgPicture.asset(
+                    'assets/icons/filter.svg',
+                    height: 15.h,
+                    colorFilter: ColorFilter.mode(
+                        provider.selectedSection == ''
+                            ? Colors.black
+                            : Colors.amber,
+                        BlendMode.srcIn),
+                  ),
                 ),
                 SizedBox(
                   width: 3.w,

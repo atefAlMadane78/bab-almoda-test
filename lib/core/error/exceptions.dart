@@ -1,7 +1,7 @@
 class ServerException implements Exception {
   final String message;
 
-  ServerException({this.message = "Server error"});
+  ServerException({this.message = "Server Error"});
 }
 
 class EmptyCacheException implements Exception {

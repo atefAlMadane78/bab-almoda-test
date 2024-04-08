@@ -28,16 +28,30 @@ class _FilterWidgetState extends State<FilterWidget> {
         builder: (context, value, child) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Chooes Section',
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Chooes Section',
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      value.selectedSection == '' ? 'Close' : 'Done',
+                      style: const TextStyle(color: Colors.black),
+                    ))
+              ],
             ),
             SizedBox(
               height: 10.h,
             ),
             Expanded(
               child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: value.allSections
                     .length, // Change this to the number of items you have
@@ -45,36 +59,59 @@ class _FilterWidgetState extends State<FilterWidget> {
                   crossAxisCount: 3,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      value.chageSection(value.allSections[index]);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: value.selectedSection ==
-                                  value.allSections[index]
-                              ? Colors.amber
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(8.r),
-                          border: Border.all(
-                            color: Colors.amber,
-                          )),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 5.h, horizontal: 8.w),
-                      margin: EdgeInsets.symmetric(
-                          vertical: 5.h, horizontal: 8.w),
-                      alignment: Alignment.center,
-                      child: Text(value.allSections[index],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: value.selectedSection ==
-                                      value.allSections[index]
-                                  ? Colors.white
-                                  : Colors.amber,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold)),
+                  return Stack(clipBehavior: Clip.none, children: [
+                    GestureDetector(
+                      onTap: () {
+                        value.chageSection(value.allSections[index]);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: value.selectedSection ==
+                                    value.allSections[index]
+                                ? Colors.amber
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(8.r),
+                            border: Border.all(
+                              color: Colors.amber,
+                            )),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.h, horizontal: 8.w),
+                        margin: EdgeInsets.symmetric(
+                            vertical: 5.h, horizontal: 8.w),
+                        alignment: Alignment.center,
+                        child: Text(value.allSections[index],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: value.selectedSection ==
+                                        value.allSections[index]
+                                    ? Colors.white
+                                    : Colors.amber,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold)),
+                      ),
                     ),
-                  );
+                    if (value.selectedSection == value.allSections[index])
+                      Positioned.fill(
+                          child: Align(
+                        alignment: Alignment.topRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            value.chageSection(value.allSections[index]);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.amber),
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ))
+                  ]);
                 },
               ),
             ),
