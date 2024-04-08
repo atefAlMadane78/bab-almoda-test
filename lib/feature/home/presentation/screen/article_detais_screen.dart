@@ -1,5 +1,7 @@
+import 'package:babalomoda/core/config/orientation_helper.dart';
 import 'package:babalomoda/core/network/WebBrowser.dart';
 import 'package:babalomoda/feature/home/data/model/top_story_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -29,38 +31,49 @@ class ArticleDetailsScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        physics: OrientationHelper.isPortrait(context)
+            ? const NeverScrollableScrollPhysics()
+            : const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
           children: [
-          if( story.multimedia?.isNotEmpty?? false)  Stack(children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5.r),
-                child: Image.network(
-                  story.multimedia!.first.url,
-                  height: ScreenUtil().screenHeight * .3,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
+            if (story.multimedia?.isNotEmpty ?? false)
+              Stack(children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5.r),
+                  child: Image.network(
+                    story.multimedia!.first.url,
+                    height: OrientationHelper.isPortrait(context)
+                        ? ScreenUtil().screenHeight * .3
+                        : ScreenUtil().screenHeight * .5,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.amber, width: .3),
-                    borderRadius:
-                        BorderRadius.only(bottomRight: Radius.circular(8.r))),
-                padding: EdgeInsets.all(5.h),
-                child: Text(
-                  '${story.section} ${story.section.isNotEmpty&& story.subsection.isNotEmpty? '-': ''} ${story.subsection}'.toUpperCase(),
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber),
-                ),
-              )
-            ]),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.amber, width: .3),
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(8.r))),
+                  padding: EdgeInsets.all(5.h),
+                  child: Text(
+                    '${story.section} ${story.section.isNotEmpty && story.subsection.isNotEmpty ? '-' : ''} ${story.subsection}'
+                        .toUpperCase(),
+                    style: TextStyle(
+                        fontSize: OrientationHelper.isPortrait(context)
+                            ? 10.sp
+                            : 6.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber),
+                  ),
+                )
+              ]),
             Container(
-              height: ScreenUtil().screenHeight * .5,
+              height: OrientationHelper.isPortrait(context)
+                  ? ScreenUtil().screenHeight * .5
+                  : ScreenUtil().screenHeight * .7,
               margin: EdgeInsets.symmetric(
                 vertical: 15.h,
               ),
@@ -82,7 +95,8 @@ class ArticleDetailsScreen extends StatelessWidget {
                     story.title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
+                      fontSize:
+                          OrientationHelper.isPortrait(context) ? 16.sp : 12.sp,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -92,45 +106,47 @@ class ArticleDetailsScreen extends StatelessWidget {
                     endIndent: ScreenUtil().screenWidth * .1,
                     color: Colors.black.withOpacity(.5),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                WebBrowser(story.url, story.title)),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${story.desFacet.first} ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp,
-                                color: Colors.black),
-                            
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '${story.desFacet.first} ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: OrientationHelper.isPortrait(context)
+                                  ? 14.sp
+                                  : 8.sp,
+                              color: Colors.black),
+                        ),
+                        TextSpan(
+                          text: 'see more..',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          WebBrowser(story.url, story.title)),
+                                ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: OrientationHelper.isPortrait(context)
+                                ? 14.sp
+                                : 6.sp,
+                            color: Colors.blue.withOpacity(.8),
                           ),
-                          TextSpan(
-                            text: 'see more',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14.sp,
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                 Expanded(child: Container()),
+                  Expanded(child: Container()),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
                       story.byline,
-                      style: TextStyle(fontSize: 10.sp),
+                      style: TextStyle(
+                          fontSize: OrientationHelper.isPortrait(context)
+                              ? 10.sp
+                              : 6.sp),
                     ),
                   )
                 ],
@@ -140,7 +156,9 @@ class ArticleDetailsScreen extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Text(
                 story.publishedDate.replaceAll('T', ' ').substring(0, 19),
-                style: TextStyle(fontSize: 10.sp),
+                style: TextStyle(
+                    fontSize:
+                        OrientationHelper.isPortrait(context) ? 10.sp : 6.sp),
               ),
             )
           ],

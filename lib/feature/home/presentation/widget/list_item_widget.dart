@@ -1,3 +1,4 @@
+import 'package:babalomoda/core/config/orientation_helper.dart';
 import 'package:babalomoda/feature/home/data/model/top_story_model.dart';
 import 'package:babalomoda/feature/home/presentation/screen/article_detais_screen.dart';
 import 'package:flutter/material.dart';
@@ -46,38 +47,39 @@ class ListItemWidget extends StatelessWidget {
                     width: 10.w,
                   ),
                   Expanded(
+                      flex: OrientationHelper.isPortrait(context) ? 1 : 3,
                       child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 55.h,
-                        child: Text(
-                          story.title,
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(1.r),
-                            color: Colors.grey.withOpacity(.3),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 55.h,
+                            child: Text(
+                              story.title,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          padding: EdgeInsets.all(5.h),
-                          width: double.infinity,
-                          child: Text(
-                            story.byline,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
+                          SizedBox(
+                            height: 5.h,
                           ),
-                        ),
-                      )
-                    ],
-                  ))
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(1.r),
+                                color: Colors.grey.withOpacity(.3),
+                              ),
+                              padding: EdgeInsets.all(5.h),
+                              width: double.infinity,
+                              child: Text(
+                                story.byline,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
+                        ],
+                      ))
                 ],
               ),
             ),
@@ -88,7 +90,8 @@ class ListItemWidget extends StatelessWidget {
         ),
         Text(
           story.publishedDate.replaceAll('T', ' ').substring(0, 19),
-          style: TextStyle(fontSize: 10.sp),
+          style: TextStyle(
+              fontSize: OrientationHelper.isPortrait(context) ? 10.sp : 4.sp),
         ),
         SizedBox(
           height: 5.h,

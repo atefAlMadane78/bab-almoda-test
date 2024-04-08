@@ -1,3 +1,4 @@
+import 'package:babalomoda/core/config/orientation_helper.dart';
 import 'package:babalomoda/core/widgets/alert.dart';
 import 'package:babalomoda/feature/home/presentation/provider/home_provider.dart';
 import 'package:babalomoda/feature/home/presentation/widget/filter_widget.dart';
@@ -26,8 +27,9 @@ class HeaderWidget extends StatelessWidget {
             },
             decoration: InputDecoration(
                 border: InputBorder.none,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.search,
+                  size: OrientationHelper.isPortrait(context) ? 15.h : 10.w,
                   color: Colors.amber,
                 ),
                 suffix: IconButton(
@@ -42,7 +44,7 @@ class HeaderWidget extends StatelessWidget {
                 label: Text(
                   'Search',
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: OrientationHelper.isPortrait(context) ?  14.sp: 10.sp,
                     color: const Color(0xffC5C5C5),
                   ),
                 )),
@@ -60,7 +62,7 @@ class HeaderWidget extends StatelessWidget {
                 Consumer<HomeProvider>(
                   builder: (context, provider, child) => SvgPicture.asset(
                     'assets/icons/filter.svg',
-                    height: 15.h,
+                    height: OrientationHelper.isPortrait(context) ? 15.h : 10.w,
                     colorFilter: ColorFilter.mode(
                         provider.selectedSection == ''
                             ? Colors.black
@@ -73,7 +75,7 @@ class HeaderWidget extends StatelessWidget {
                 ),
                 Text(
                   'Filter',
-                  style: TextStyle(fontSize: 12.sp),
+                  style: TextStyle(fontSize: OrientationHelper.isPortrait(context) ?  12.sp: 8.sp),
                 ),
               ],
             ),
@@ -86,10 +88,10 @@ class HeaderWidget extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                iconButton('list', !provider.isGrid, () {
+                iconButton(context, 'list', !provider.isGrid, () {
                   provider.changeListView(gridVal: false);
                 }),
-                iconButton('grid', provider.isGrid, () {
+                iconButton(context, 'grid', provider.isGrid, () {
                   provider.changeListView(gridVal: true);
                 }),
               ],
@@ -100,12 +102,13 @@ class HeaderWidget extends StatelessWidget {
     );
   }
 
-  Widget iconButton(String iconName, bool isGrid, void Function() onTap) =>
+  Widget iconButton(BuildContext context, String iconName, bool isGrid,
+          void Function() onTap) =>
       GestureDetector(
           onTap: onTap,
           child: SvgPicture.asset(
             'assets/icons/$iconName.svg',
-            height: 15.h,
+            height: OrientationHelper.isPortrait(context) ? 15.h : 10.w,
             colorFilter: ColorFilter.mode(
                 isGrid ? Colors.amber : Colors.black, BlendMode.srcIn),
           ));

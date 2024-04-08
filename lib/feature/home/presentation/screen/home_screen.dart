@@ -1,4 +1,5 @@
 import 'package:babalomoda/core/config/enum.dart';
+import 'package:babalomoda/core/config/orientation_helper.dart';
 import 'package:babalomoda/core/widgets/loading_widget.dart';
 import 'package:babalomoda/feature/home/data/model/top_story_model.dart';
 import 'package:babalomoda/feature/home/presentation/provider/home_provider.dart';
@@ -94,7 +95,7 @@ class _HomeScrennState extends State<HomeScrenn> with TickerProviderStateMixin {
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2,
-                                            childAspectRatio: .5.sp),
+                                            childAspectRatio:OrientationHelper.isPortrait(context) ?  .5.sp: .7.sp),
                                     itemCount: filterStories.length,
                                     itemBuilder: (context, index) {
                                       return GridItemWidget(
